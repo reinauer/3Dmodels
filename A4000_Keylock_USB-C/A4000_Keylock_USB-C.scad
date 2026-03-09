@@ -1,10 +1,11 @@
 // Replace the A4000D front key lock with a USB-C port
+// Thread: M12x1.0
 // e.g. for KickSmash32
 
 eps = 1/128;
 $fn = 256;
-//color = grey(40);
-color = grey(90);
+//body_color = grey(40);
+body_color = grey(90);
 function r2sides(r) = $fn ? $fn : ceil(max(min(360 / $fa, r * 2 * PI / $fs), 5));
 function r2sides4n(r) = floor((r2sides(r) + 3) / 4) * 4;
 function grey(n) = [0.01, 0.01, 0.01] * n;
@@ -91,7 +92,7 @@ function thread_profile(h, crest, angle, overlap = 0.1) =
     let(base = crest + 2 * (h + overlap) * tan(angle / 2))
         [[-base / 2, -overlap, 0], [-crest / 2, h, 0], if(crest) [crest / 2, h, 0], [base / 2, -overlap, 0]];
 
-module male_metric_thread(d, pitch, length, color) {
+module male_metric_thread(d, pitch, length, body_color) {
     H = pitch * sqrt(3) / 2;
     h = 5 * H / 8;
     minor_d = d - 2 * h;
@@ -137,7 +138,7 @@ module male_metric_thread(d, pitch, length, color) {
 
     ends_faces = concat(start_faces, end_faces);
 
-    color(color * 0.8) {
+    color(body_color * 0.8) {
         render() intersection() {
             polyhedron(points, ends_faces);
             rotate_extrude()
@@ -151,7 +152,7 @@ module male_metric_thread(d, pitch, length, color) {
         polyhedron(points, middle_faces);
     }
 
-    color(color)
+    color(body_color)
         rotate(90)
             cylinder(d = minor_d, h = length);
 }
@@ -162,17 +163,17 @@ module male_metric_thread(d, pitch, length, color) {
 module rounded_square(size, r, center = true)
 {
     assert(r < min(size.x, size.y) / 2);
-    color(color) offset(r) offset(-r) square(size, center = center);
+    color(body_color) offset(r) offset(-r) square(size, center = center);
 }
 
 
 module body() {
   intersection() {
-    color(color) cube([12,10.5,17], center=true);	  
-    male_metric_thread(12, 1.0, 12, color);
+    color(body_color) cube([12,10.5,17], center=true);	  
+    male_metric_thread(12, 1.0, 12, body_color);
   }
   translate([0,0,8])
-    color(color) cylinder(h = 2, r1 = 15/2, r2 = 12/2);
+    color(body_color) cylinder(h = 2, r1 = 15/2, r2 = 12/2);
 
 }
 
@@ -182,7 +183,7 @@ module usb()
 {
   rotate([0,0,45])
     translate([0, 0,6])
-      color(color) linear_extrude(height = 13, center = true, convexity = 10, twist = 0)
+      color(body_color) linear_extrude(height = 13, center = true, convexity = 10, twist = 0)
          rounded_square([w, h], h / 2 - 0.5, center = true);
 }
 
