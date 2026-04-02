@@ -7,3 +7,4 @@
 * A4000 Keylock socket for USB-C - Replace the KO132A-1501 PC key lock on your
   Amiga 4000D with a USB-C port for easy access to Z3660 or Kicksmash32
 
+  ![A4000 Keylock USB-C model](A4000_Keylock_USB-C/A4000_Keylock_USB-C.png)

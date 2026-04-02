@@ -169,7 +169,7 @@ module rounded_square(size, r, center = true)
 
 module body() {
   intersection() {
-    color(body_color) cube([12,10.5,17], center=true);	  
+    color(body_color) cube([12,10.5,17], center=true);
     male_metric_thread(12, 1.0, 12, body_color);
   }
   translate([0,0,8])
@@ -177,8 +177,10 @@ module body() {
 
 }
 
-w = 8.94;
-h = 3.26;
+// datasheet width + tolerance
+w = 8.94 + 0.36;
+h = 3.26 + 0.04;
+
 module usb()
 {
   rotate([0,0,45])
@@ -187,7 +189,8 @@ module usb()
          rounded_square([w, h], h / 2 - 0.5, center = true);
 }
 
-difference() {           
+rotate([0,180,0]) translate([0,0,-10])
+difference() {
   body();
   usb();
 }
